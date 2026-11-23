@@ -484,4 +484,17 @@ static inline void mbedtls_xor_no_simd(unsigned char *r,
 #define MBEDTLS_ATTRIBUTE_UNTERMINATED_STRING
 #endif /* MBEDTLS_HAS_ATTRIBUTE_NONSTRING */
 
+/* Cooperative yield point for long computations.
+ * On systems with cooperative multitasking (classic Mac OS threads) the
+ * application defines MBEDTLS_PLATFORM_YIELD_HOOK and supplies
+ * mbedtls_platform_yield(), which is called once per iteration of the slow
+ * public-key loops (modular exponentiation and elliptic-curve multiplication)
+ * so the rest of the system keeps running during key exchange. */
+#if defined(MBEDTLS_PLATFORM_YIELD_HOOK)
+void mbedtls_platform_yield(void);
+#define MBEDTLS_YIELD() mbedtls_platform_yield()
+#else
+#define MBEDTLS_YIELD() do { } while (0)
+#endif
+
 #endif /* MBEDTLS_LIBRARY_COMMON_H */

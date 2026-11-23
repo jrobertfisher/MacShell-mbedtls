@@ -2081,6 +2081,7 @@ static int ecp_mul_comb_core(const mbedtls_ecp_group *grp, mbedtls_ecp_point *R,
 
     while (i != 0) {
         MBEDTLS_ECP_BUDGET(MBEDTLS_ECP_OPS_DBL + MBEDTLS_ECP_OPS_ADD);
+        MBEDTLS_YIELD();
         --i;
 
         MBEDTLS_MPI_CHK(ecp_double_jac(grp, R, R, tmp));
@@ -2562,6 +2563,7 @@ static int ecp_mul_mxz(mbedtls_ecp_group *grp, mbedtls_ecp_point *R,
     /* Loop invariant: R = result so far, RP = R + P */
     i = grp->nbits + 1; /* one past the (zero-based) required msb for private keys */
     while (i-- > 0) {
+        MBEDTLS_YIELD();
         b = mbedtls_mpi_get_bit(m, i);
         /*
          *  if (b) R = 2R + P else R = 2R,

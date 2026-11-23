@@ -902,6 +902,8 @@ static void mbedtls_mpi_core_exp_mod_optionally_safe(mbedtls_mpi_uint *X,
     mbedtls_mpi_uint window = 0;
 
     do {
+        MBEDTLS_YIELD();
+
         /* Square */
         mbedtls_mpi_core_montmul(X, X, X, AN_limbs, N, AN_limbs, mm, temp);
 
