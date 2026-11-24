@@ -6,6 +6,9 @@
 /*
  *  Copyright The Mbed TLS Contributors
  *  SPDX-License-Identifier: Apache-2.0 OR GPL-2.0-or-later
+ *
+ *  Modified in 2026 by Rob Fisher for MacShell: calls MBEDTLS_YIELD() in long
+ *  operations so classic Mac OS (cooperative multitasking) stays responsive.
  */
 
 #ifndef MBEDTLS_LIBRARY_COMMON_H
